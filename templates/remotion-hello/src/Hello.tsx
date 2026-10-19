@@ -54,7 +54,7 @@ export const Hello = () => {
   // Beat 1 card, Beat 2 morph to pill
   const enter = S(f - 6);
   const m = easeInOutCubic(clamp01((f - 54) / 24));
-  const w = lerp(880, 960, m);
+  const w = lerp(1040, 960, m);
   const h = lerp(520, 180, m);
   const radius = Math.min(lerp(44, 90, m), h / 2);
 
@@ -73,9 +73,9 @@ export const Hello = () => {
           opacity: clamp01((f - 6) / 6),
         }} />
 
-        <div style={{...row(520, 132), fontWeight: 700}}>
-          <Word f={f} start={14} size={132} weight={700} color={TEXT} rise={56} exit={exit1}>Motion,</Word>
-          <Word f={f} start={19} size={132} weight={700} color={ACCENT} rise={56} exit={exit2}>directed.</Word>
+        <div style={{...row(520, 96), fontWeight: 700}}>
+          <Word f={f} start={14} size={96} weight={700} color={TEXT} rise={56} exit={exit1}>Motion,</Word>
+          <Word f={f} start={19} size={96} weight={700} color={ACCENT} rise={56} exit={exit2}>directed.</Word>
         </div>
 
         {lineLen > 0 && (

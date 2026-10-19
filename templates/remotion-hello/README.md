@@ -7,4 +7,4 @@ npm install
 npx remotion render src/index.ts hello out/hello.mp4 --concurrency=2
 ```
 
-Deviations from the spec: spring is the closed form in `src/helpers.ts` (not `spring()`); Inter is the latin subset only (SIL OFL, `public/fonts/OFL.txt`). The 132 px headline is wider than the 880 px card, as the spec's numbers imply.
+Deviations from the spec: spring is the closed form in `src/helpers.ts` (not `spring()`); Inter is the latin subset only (SIL OFL, `public/fonts/OFL.txt`). The headline is 96 px on a 1040 px card (the spec's corrected values; the headline is about 873 px wide).

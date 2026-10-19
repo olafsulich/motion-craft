@@ -6,7 +6,7 @@ Skills:
 
 | Skill | What it does |
 |---|---|
-| `motion-setup` | Checks Node, ffmpeg and Chrome/Chromium, picks the renderer, copies a hello-world clip and renders it to mp4. |
+| `motion-setup` | Checks Node, ffmpeg and free disk, picks the renderer, copies a hello-world clip and renders it to mp4. |
 | `motion-direction` | Turns an idea into a treatment and keeps the clip from looking like generic AI animation. |
 | `motion-stills-loop` | Plan, render key stills, review, get your approval, then render the full clip. |
 
@@ -29,19 +29,19 @@ Ask Claude: "Set up motion-craft and render the hello clip." It runs `motion-set
 
 **HyperFrames (default)**
 
-1. Preflight: Node 22+, ffmpeg, Chrome or Chromium.
-2. The skill copies `templates/hyperframes-hello/` to `./motion-hello`, installs dependencies and renders it.
-3. Result: a 1920x1080, 30 fps, 4 s `hello.mp4`. Commands: `skills/motion-setup/references/hyperframes.md`.
+1. Preflight: Node 22+, ffmpeg and ffprobe, at least 2 GB free disk (HyperFrames refuses to render below 1 GB; it needs about 400 MB). No system Chrome needed.
+2. The skill copies `templates/hyperframes-hello/` to `./motion-hello`, runs `npm install` and `npx hyperframes browser ensure` (downloads about 115 MB of headless Chrome once), then `npx hyperframes check` and `npm run render`.
+3. Result: a 1920x1080, 30 fps, 4 s `out/hello.mp4` in about 15 s. Commands: `skills/motion-setup/references/hyperframes.md`. The CLI sends anonymous telemetry; opt out with `npx hyperframes telemetry disable`.
 
 **Remotion**
 
-1. Same preflight. The skill first asks whether your organisation may use Remotion for free (see below).
-2. It copies `templates/remotion-hello/` to `./motion-hello`, installs and renders.
-3. Same output. Commands: `skills/motion-setup/references/remotion.md`.
+1. Same preflight, with more disk: allow about 800 MB (`node_modules` 490 MB, Chrome 300 MB) plus temp frames. A full disk makes the Chrome download fail with `ENOSPC` or a render hang at low CPU. The skill first asks whether your organisation may use Remotion for free (see below).
+2. It copies `templates/remotion-hello/` to `./motion-hello`, runs `npm install`, then `npx remotion render src/index.ts hello out/hello.mp4 --concurrency=2`. The first render downloads about 100 MB of Chrome Headless Shell; if that is blocked, add `--browser-executable=/path/to/chrome-headless-shell` or Chromium.
+3. Same output in about 20 s. Commands: `skills/motion-setup/references/remotion.md`.
 
 Then ask for your own clip: "Make a 10 s announcement clip for X." `motion-direction` writes a treatment, `motion-stills-loop` shows you stills before the full render.
 
-The hello clip is specified in [docs/HELLO-SPEC.md](docs/HELLO-SPEC.md). Both templates follow it.
+The hello clip is specified in [docs/HELLO-SPEC.md](docs/HELLO-SPEC.md). Both templates follow it (headline 96 px on a 1040 px card).
 
 ## Licence
 

@@ -40,7 +40,7 @@ Animate width, height and radius of one element together, centred on a fixed poi
 
 ```tsx
 const m = interpolate(frame, [54, 78], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)});
-const w = 880 + 80 * m, h = 520 - 340 * m, r = Math.min(44 + 46 * m, h / 2);
+const w = 1040 - 80 * m, h = 520 - 340 * m, r = Math.min(44 + 46 * m, h / 2);
 <div style={{position: 'absolute', left: 960 - w / 2, top: 540 - h / 2, width: w, height: h, borderRadius: r, boxSizing: 'border-box', border: `2px solid ${BORDER}`}} />
 ```
 

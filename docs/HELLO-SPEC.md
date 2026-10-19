@@ -48,13 +48,13 @@ The whole scene (everything below) sits in one wrapper scaled about C. Camera sc
 | 54 to 78 | `lerp(1.20, 1.12, easeInOutCubic((f-54)/24))` |
 | 78 to 119 | `lerp(1.12, 1.18, (f-78)/41)` (linear drift) |
 
-Framing check: hero is 880 x 1.20 = 1056 px (55 % of width) at f54, and 960 x 1.12 = 1075 px (56 %) at f78, 1133 px (59 %) at f119.
+Framing check: hero is about 1000 x 1.16 = 1160 px (60 % of width) at f54 (1040 wide card morphing), and 960 x 1.12 = 1075 px (56 %) at f78, 1133 px (59 %) at f119.
 
 ### Beat 1: card and headline (frames 6 to 58)
 
-- **Card** (hero): rounded rectangle centred on C, 880 x 520, radius 44, fill Surface, border Border.
+- **Card** (hero): rounded rectangle centred on C, 1040 x 520, radius 44, fill Surface, border Border.
   - Enters at frame 6: `scale = 0.86 + 0.14 * S(f-6)`, `translateY = 60 * (1 - S(f-6))` px, `opacity = clamp01((f-6)/6)`.
-- **Headline** "Motion, directed." two words, Inter 700, 132 px, centred on C, words separated by a 0.28 em space, vertical centre at y = 520.
+- **Headline** "Motion, directed." two words, Inter 700, 96 px (the `motion-direction` minimum), centred on C, words separated by a 0.28 em space, vertical centre at y = 520. The text is about 873 px wide, so it sits inside the 1040 px card with about 83 px of margin per side. (At the earlier 132 px it was about 1200 px wide and overhung the old 880 px card.)
   - Word 1 "Motion," colour Text, starts frame 14. Word 2 "directed." colour Accent, starts frame 19.
   - Each word: `translateY = 56 * (1 - S(f-start))` px, `opacity = clamp01((f-start)/5)`.
 - **Draw-on line**: 4 px tall, Accent, round caps, horizontal from x = 720 to x = 1200 at y = 700. Draws left to right from frame 22 to 40: `length = 480 * easeOutCubic(clamp01((f-22)/18))`.
@@ -64,7 +64,7 @@ Framing check: hero is 880 x 1.20 = 1056 px (55 % of width) at f54, and 960 x 1.
 
 Card becomes pill, centred on C throughout. `m = easeInOutCubic(clamp01((f-54)/24))`:
 
-- width `lerp(880, 960, m)`, height `lerp(520, 180, m)`, corner radius `min(lerp(44, 90, m), height / 2)`.
+- width `lerp(1040, 960, m)`, height `lerp(520, 180, m)`, corner radius `min(lerp(44, 90, m), height / 2)`.
 - Fill and border unchanged. Pill is 960 x 180, radius 90 from frame 78.
 
 ### Beat 3: pill text (frames 72 to 119)
@@ -93,7 +93,7 @@ Frames 100 to 119: hold (only the camera drift moves).
 | Name | Frame | Shows |
 |---|---|---|
 | start | 30 | card at rest, both words in, line mid-draw |
-| middle | 66 | morph at its midpoint (m = 0.5): about 920 x 350, radius 67, no text |
+| middle | 66 | morph at its midpoint (m = 0.5): 1000 x 350, radius 67, no text |
 | end | 119 | pill at rest with all three words |
 
 Comparison frames for a pixel diff of the two versions: 12, 30, 48, 66, 84, 119. Expect only anti-aliasing and text-rasterisation differences; a visible difference in position, size, colour or timing is a bug in one version.

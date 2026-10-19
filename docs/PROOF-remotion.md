@@ -57,3 +57,7 @@ Stills: `previews/remotion/start.png` (frame 30), `middle.png` (66), `end.png` (
 ## Cleanup
 
 Chrome processes started by this job were killed after the stills; `node_modules` and `out/` in the scratch dir were removed after the proof except `out/hello.mp4`. Disk during the proof: root at 99 to 100 % until the orchestrator cleaned the npm cache; this job's scratch peaked at about 0.5 GB.
+
+## Re-render after integrate
+
+HELLO-SPEC changed (headline 96 px, card 1040 px wide, morph 1040 to 960; middle still 1000 x 350). The Remotion template was updated to the same values and the clip re-rendered in `~/scratch/motion-craft-proof/` under `flock ~/scratch/motion-craft-proof/.render.lock`. Full render (`--concurrency=2 --browser-executable=<Playwright headless shell>`, flock-wrapped): **20.8 s wall**, 179 kB mp4, ffprobe 1920x1080, 30/1, 120 frames. Fresh `npm install` (258 packages). 3 stills via `remotion still`: start, middle, end replaced. The headline now spans about 873 px inside the 1040 px card (x 523 to 1395 at frame 30 of the HyperFrames still, card edges at 373 and 1547). The earlier numbers above describe the pre-integrate clip. Cross-renderer PSNR of the new stills: start 35.1 dB, middle identical, end 35.4 dB (anti-aliasing only). node_modules and frames were deleted afterwards.

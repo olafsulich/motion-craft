@@ -62,7 +62,7 @@ One wrapper around the whole scene, scaled about the frame centre:
 tl.set("#cam", { scale: camera(f) }, at);   // camera(f) is a piecewise function of the frame
 ```
 
-Pushes use `easeInOutCubic`, the slow drift under a held state is linear. Choose the scale so the hero is half to three quarters of the 1920 px width (hello: 880 px card x 1.2 = 55 %). Put the camera on its own element, never on `#root`, so the page background does not scale.
+Pushes use `easeInOutCubic`, the slow drift under a held state is linear. Choose the scale so the hero is half to three quarters of the 1920 px width (hello: 1040 px card x 1.2 = 65 %). Put the camera on its own element, never on `#root`, so the page background does not scale.
 
 ## Shape morph
 
@@ -71,7 +71,7 @@ Morph one element, do not cross-fade two. Animate `width`, `height` and `borderR
 ```js
 const m = easeInOutCubic(clamp01((f - 54) / 24));
 const h = lerp(520, 180, m);
-tl.set("#card", { width: lerp(880, 960, m), height: h, borderRadius: Math.min(lerp(44, 90, m), h / 2) }, at);
+tl.set("#card", { width: lerp(1040, 960, m), height: h, borderRadius: Math.min(lerp(44, 90, m), h / 2) }, at);
 ```
 
 Clamp the radius to `height / 2` or CSS will fall back to a different curve at the end. Use `box-sizing: border-box` so the 2 px border stays inside the size. For arbitrary shapes (icon to icon) animate SVG path data with a library such as flubber; it was not tested here.
@@ -105,7 +105,7 @@ Words of one headline sit in a `display: flex; gap: 0.28em` row so their positio
 
 ## Type
 
-Bundle the font in the project (`fonts/*.woff2` and an `@font-face` with a relative URL); do not use a CDN or a system fallback. After `snapshot` or `render`, check the log line `Fonts: N loaded`. Set `line-height: 1` and `letter-spacing: -0.02em` for headlines. Measure the headline against its container: at 132 px Inter 700, "Motion, directed." is about 1060 px wide, wider than the 880 px card in the hello clip (see the template README).
+Bundle the font in the project (`fonts/*.woff2` and an `@font-face` with a relative URL); do not use a CDN or a system fallback. After `snapshot` or `render`, check the log line `Fonts: N loaded`. Set `line-height: 1` and `letter-spacing: -0.02em` for headlines. Measure the headline against its container: at 96 px Inter 700, "Motion, directed." is about 873 px wide, which fits the 1040 px card of the hello clip with about 83 px per side; at 132 px it would be about 1200 px and overhang it.
 
 ## Audio and SFX
 

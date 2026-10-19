@@ -17,7 +17,7 @@ From `treatment.md`, list one frame per beat at the moment the beat reads best (
 
 ### 2. Render the stills
 
-Render only those frames as PNG into `stills/` using the reference for the chosen renderer. Name files by frame: `stills/f0090.png`. Then build two overview images if ffmpeg is available:
+Render only those frames as PNG into `stills/` using the reference for the chosen renderer; its command produces the required names, zero-padded by frame: `stills/f0090.png`. The globs below sort alphabetically and only give frame order with that padding, so do not rename. Then build two overview images if ffmpeg is available:
 
 ```bash
 # contact sheet: all stills in a grid
