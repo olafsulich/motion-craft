@@ -112,7 +112,7 @@ Bundle the font in the project (`fonts/*.woff2` and an `@font-face` with a relat
 Not part of the hello clip. HyperFrames mixes `<audio>` elements placed on the timeline into the mp4:
 
 ```html
-<audio src="assets/tick.wav" data-start="0.2" data-duration="0.06" data-track-index="2" data-volume="0.4"></audio>
+<audio id="sfx1" src="assets/tick.wav" data-start="0.2" data-duration="0.06" data-track-index="2" data-volume="0.4"></audio>
 ```
 
-`data-start` and `data-duration` are seconds (frame / 30), `data-volume` is gain (1 = 0 dB), `data-fade-in` / `data-fade-out` are clip-edge fades in seconds, `data-track-index` is the Studio lane and does not control mixing. Per the house style: a soft tick on the main moves, a low whoosh across a camera move, well below any voice or music, added in a separate pass after the picture is approved. Ducking, buses and effects: the HyperFrames audio skill (`npx hyperframes skills`) and `npx hyperframes docs data-attributes`. Sourcing sounds is up to the user (own files, or `ffmpeg` synthesis); check each file's licence.
+Every `<audio>` needs a unique `id`: `check` fails with `media_missing_id` otherwise (the renderer finds media by id). Verified: two 60 ms ticks at 0.2 s and 0.4667 s produce an AAC track with sound only in those windows (`ffmpeg -ss 0.2 -t 0.1 -i out.mp4 -af volumedetect -f null -`). `data-start` and `data-duration` are seconds (frame / 30), `data-volume` is gain (1 = 0 dB), `data-fade-in` / `data-fade-out` are clip-edge fades in seconds, `data-track-index` is the Studio lane and does not control mixing. Per the house style: a soft tick on the main moves, a low whoosh across a camera move, well below any voice or music, added in a separate pass after the picture is approved. Ducking, buses and effects: the HyperFrames audio skill (`npx hyperframes skills`) and `npx hyperframes docs data-attributes`. Sourcing sounds is up to the user (own files, or `ffmpeg` synthesis); check each file's licence.
