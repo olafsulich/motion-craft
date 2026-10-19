@@ -1,0 +1,8 @@
+{
+  "name": "motion-craft",
+  "description": "Direct and render polished motion-graphics clips (UI and announcement animations with kinetic type) to mp4 from Claude Code, using HyperFrames or Remotion.",
+  "version": "0.1.0",
+  "author": { "name": "Olaf Sulich" },
+  "license": "MIT",
+  "keywords": ["motion-graphics", "animation", "video", "hyperframes", "remotion", "mp4"]
+}
