@@ -8,7 +8,7 @@ HyperFrames (HeyGen, Apache-2.0, no per-render fees) renders an HTML page to mp4
 |---|---|
 | Node | 22 or newer (`engines` in its package.json). |
 | ffmpeg, ffprobe | On PATH. |
-| Chrome | **None needed on PATH.** The renderer uses its own `chrome-headless-shell` (about 114 MB download, about 260 MB unpacked, cached in `~/.cache/hyperframes/chrome`). Fetch it up front: `npx hyperframes browser ensure` (about 7 s). Do not trust `npx hyperframes doctor` on this point: it also reports "Archive extractor not found" when `unzip` is missing, yet the download still unpacks. |
+| Chrome | **None needed on PATH.** The renderer uses its own `chrome-headless-shell` (about 114 MB download, about 260 MB unpacked, cached in `~/.cache/hyperframes/chrome`). Fetch it up front: `npx hyperframes browser ensure` (about 7 s). `npx hyperframes doctor` may report "Archive extractor not found" (missing `unzip`) and a failed Chrome check; ignore both and do not install packages for them: the download unpacks without `unzip`. Trust `browser ensure` and `check` instead. |
 | Disk | **At least 1 GB free on the disk that holds the output file**, or `render` stops with "Low disk space" before drawing a frame. `node_modules` is about 120 MB. |
 | Memory | The hello render peaked at about 0.5 GB RSS (one worker). Each extra worker is another Chrome (about 256 MB). On a small box pass `--workers 1`. |
 | Telemetry | The CLI sends anonymous usage telemetry. Tell the user; opt out with `npx hyperframes telemetry disable`. |

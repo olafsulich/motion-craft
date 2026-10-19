@@ -49,6 +49,21 @@ Applied (13):
 12. README says the hello clip follows the corrected values.
 13. Remotion "state Remotion downloads its own Chrome": in the Chrome row.
 
+Per-item accounting. HF = `docs/PROOF-hyperframes.md` "Steps that were wrong", RM = `docs/PROOF-remotion.md` "Wrong or missing steps". Each item by number:
+
+- HF 1 (preflight asks for Chrome): applied: skills/motion-setup/references/hyperframes.md:11
+- HF 2 (1 GB disk guard): applied: skills/motion-setup/references/hyperframes.md:12 and :57
+- HF 3 (stills naming): applied: skills/motion-stills-loop/references/hyperframes.md:13
+- HF 4 (`hyperframes doctor` reports missing `unzip` and a failed Chrome check): applied: skills/motion-setup/references/hyperframes.md:11
+- HF 5 (headline overflow): applied: docs/HELLO-SPEC.md:57 (96 px headline, 1040 px card), templates/hyperframes-hello/README.md:20
+- HF 6 (`<audio>` needs an `id`, `media_missing_id`): applied: skills/motion-direction/references/hyperframes.md:118
+- RM 1 (Chrome download dies on a full disk): applied: skills/motion-setup/references/remotion.md:12
+- RM 2 (render hangs at low CPU on a full disk): applied: skills/motion-setup/references/remotion.md:12
+- RM 3 (official Chrome download unverified; `--browser-executable` fallback): applied: skills/motion-setup/references/remotion.md:11 and :46
+- RM 4 (npm warning about esbuild's postinstall / `allowScripts`): applied: skills/motion-setup/references/remotion.md:23
+- RM 5 (`--browser-executable` not mentioned near the render line): applied: skills/motion-setup/references/remotion.md:11 and :46 (render commands stay minimal on purpose)
+- RM 6 (headline wider than the card): applied: docs/HELLO-SPEC.md:57, templates/remotion-hello/README.md:10
+
 Rejected:
 
 - Headline-fix option "wider card only": at 132 px the text is about 1200 px, which would need a card of about 1300 px (68 % of frame width, over the 55 % hero framing guidance at camera 1.2). Rejected for the smaller type plus modest widening.
