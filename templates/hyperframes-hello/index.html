@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="node_modules/gsap/dist/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Inter";
+        font-weight: 600;
+        src: url("fonts/Inter-600.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 700;
+        src: url("fonts/Inter-700.woff2") format("woff2");
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #0b0d10;
+      }
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #0b0d10;
+        font-family: "Inter", sans-serif;
+        color: #f2f4f7;
+      }
+      /* Camera: the whole scene sits in one wrapper scaled about the frame centre. */
+      #cam {
+        position: absolute;
+        inset: 0;
+        transform-origin: 960px 540px;
+      }
+      #card {
+        position: absolute;
+        left: 960px;
+        top: 540px;
+        width: 880px;
+        height: 520px;
+        border-radius: 44px;
+        background: #14181d;
+        border: 2px solid #2a313a;
+        opacity: 0;
+      }
+      .row {
+        position: absolute;
+        left: 960px;
+        display: flex;
+        white-space: nowrap;
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
+      #headline {
+        top: 520px;
+        font-size: 132px;
+        font-weight: 700;
+        gap: 0.28em;
+      }
+      #pilltext {
+        top: 540px;
+        font-size: 72px;
+        font-weight: 600;
+        gap: 0.28em;
+      }
+      .word {
+        display: block;
+        opacity: 0;
+      }
+      .accent {
+        color: #ff6b2c;
+      }
+      #line {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: visible;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="4"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div id="cam">
+        <div id="card"></div>
+        <div id="headline" class="row">
+          <span id="w1" class="word">Motion,</span>
+          <span id="w2" class="word accent">directed.</span>
+        </div>
+        <svg id="line" viewBox="0 0 1920 1080">
+          <line
+            id="draw"
+            x1="720"
+            y1="700"
+            x2="1200"
+            y2="700"
+            stroke="#ff6b2c"
+            stroke-width="4"
+            stroke-linecap="round"
+            stroke-dasharray="480 480"
+            stroke-dashoffset="480"
+            opacity="0"
+          />
+        </svg>
+        <div id="pilltext" class="row">
+          <span id="p1" class="word">Straight</span>
+          <span id="p2" class="word">to</span>
+          <span id="p3" class="word accent">mp4.</span>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Clip spec: docs/HELLO-SPEC.md. Everything below is a pure function of the frame number.
+      const FPS = 30;
+      const FRAMES = 120;
+
+      const clamp01 = (x) => Math.min(1, Math.max(0, x));
+      const lerp = (a, b, p) => a + (b - a) * p;
+      const easeOutCubic = (x) => 1 - Math.pow(1 - x, 3);
+      const easeInCubic = (x) => x * x * x;
+      const easeInOutCubic = (x) =>
+        x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+
+      // Spring: unit mass, stiffness 256, damping 24 (zeta 0.75), 0 -> 1, n = frames since start.
+      const WD = 16 * Math.sqrt(1 - 0.75 * 0.75);
+      const S = (n) => {
+        if (n <= 0) return 0;
+        const s = n / FPS;
+        return 1 - Math.exp(-12 * s) * (Math.cos(WD * s) + (12 / WD) * Math.sin(WD * s));
+      };
+
+      const camera = (f) => {
+        if (f <= 54) return lerp(1.0, 1.2, easeInOutCubic(f / 54));
+        if (f <= 78) return lerp(1.2, 1.12, easeInOutCubic((f - 54) / 24));
+        return lerp(1.12, 1.18, (f - 78) / 41);
+      };
+
+      // Word entrance: rises with the spring, fades in over 5 frames. `up` is the rise distance.
+      const enter = (f, start, up) => ({
+        y: up * (1 - S(f - start)),
+        opacity: clamp01((f - start) / 5),
+      });
+      // Headline exit: fades and lifts 24 px, eased in.
+      const exit = (f, start) => easeInCubic(clamp01((f - start) / 8));
+
+      const word = (f, start, exitStart) => {
+        const e = enter(f, start, 56);
+        const p = exit(f, exitStart);
+        return { y: e.y - 24 * p, opacity: e.opacity * (1 - p) };
+      };
+
+      const state = (f) => {
+        const m = easeInOutCubic(clamp01((f - 54) / 24));
+        const h = lerp(520, 180, m);
+        const cs = S(f - 6);
+        const lineLen = 480 * easeOutCubic(clamp01((f - 22) / 18));
+        const lineP = exit(f, 50);
+        return {
+          cam: { scale: camera(f) },
+          card: {
+            width: lerp(880, 960, m),
+            height: h,
+            borderRadius: Math.min(lerp(44, 90, m), h / 2),
+            scale: 0.86 + 0.14 * cs,
+            y: 60 * (1 - cs),
+            opacity: clamp01((f - 6) / 6),
+          },
+          w1: word(f, 14, 50),
+          w2: word(f, 19, 52),
+          draw: {
+            opacity: lineLen > 0 ? 1 - lineP : 0,
+            y: -24 * lineP,
+            attr: { "stroke-dashoffset": 480 - lineLen },
+          },
+          p1: enter(f, 72, 40),
+          p2: enter(f, 76, 40),
+          p3: enter(f, 80, 40),
+        };
+      };
+
+      // Centre the card and the text rows on their anchor point with GSAP percent offsets.
+      gsap.set("#card", { xPercent: -50, yPercent: -50 });
+      gsap.set(".row", { xPercent: -50, yPercent: -50 });
+
+      const targets = {
+        cam: "#cam", card: "#card", w1: "#w1", w2: "#w2", draw: "#draw",
+        p1: "#p1", p2: "#p2", p3: "#p3",
+      };
+
+      // One paused timeline. The state of frame f is baked as `set` calls that apply on
+      // [f - 0.5, f + 0.5) frames, so a seek to exactly f / 30 s (or anywhere inside the frame)
+      // lands on that frame.
+      const tl = gsap.timeline({ paused: true });
+      for (let f = 0; f < FRAMES; f++) {
+        const at = f === 0 ? 0 : (f - 0.5) / FPS;
+        const s = state(f);
+        for (const key in targets) tl.set(targets[key], s[key], at);
+      }
+      // Pad the timeline to the full 4.000 s so the last frame is held.
+      tl.set("#root", { opacity: 1 }, FRAMES / FPS);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

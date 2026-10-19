@@ -1,0 +1,18 @@
+{
+  "name": "motion-hello",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "hyperframes check",
+    "dev": "hyperframes preview",
+    "render": "hyperframes render --output out/hello.mp4",
+    "stills": "hyperframes snapshot --at 1,2.2,3.9666667 --output stills"
+  },
+  "dependencies": {
+    "gsap": "3.15.0",
+    "hyperframes": "0.8.174"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
