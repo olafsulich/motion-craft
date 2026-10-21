@@ -1,6 +1,6 @@
 # motion-hello (Remotion)
 
-The motion-craft hello clip, built to `docs/HELLO-SPEC.md` of the plugin repo: 1920x1080, 30 fps, 120 frames, silent.
+The motion-craft hello clip, built to `docs/HELLO-SPEC.md` of the motion-craft repo: 1920x1080, 30 fps, 120 frames, silent.
 
 ```bash
 npm install

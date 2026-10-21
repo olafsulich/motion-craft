@@ -1,9 +1,13 @@
 # Notes
 
+## Decision
+
+2026-10-19 (Olaf): motion-craft ships as plain skills copied into `~/.claude/skills/` or `<project>/.claude/skills/`. Skills are invoked as `/motion-setup` etc.
+
 ## Open questions
 
-1. **Final name.** `motion-craft` is a working name. Renaming means changing `plugin.json`, `marketplace.json` (entry and marketplace `name` must stay identical to the manifest name) and the README install lines.
-2. **GitHub account / hosting.** Which account or organisation hosts the marketplace repo; until decided, install is from a local path. Not created, not pushed.
+1. **Final name.** `motion-craft` is a working name. Renaming means changing the skill folder names, the `name` in each `SKILL.md` and the README install lines.
+2. **GitHub account / hosting.** Which account or organisation hosts the repo; until decided, install is by copying the skill folders from a local clone.
 3. **Lambda / cloud rendering.** Out of scope for v0.1. Remotion Lambda and HyperFrames cloud/Lambda options exist (HyperFrames Lambda support is reported only by an aggregator, unverified); accounts, secrets and cost would land on the user.
 4. **Support promise.** As-is examples, or tracking upstream HyperFrames/Remotion CLI changes?
 5. **`npx skills add`** as a skills-only install path: untested for this repo layout.
@@ -16,15 +20,10 @@
 - Pixel diff of the two hello clips: only three stills compared (PSNR 35.1 dB start, 35.4 dB end, identical middle); the six-frame comparison in the spec was not run.
 - Verified in the proofs: HyperFrames needs Node 22+ and no system Chrome (own headless shell); Remotion needs no system Chrome per its docs.
 - `${CLAUDE_SKILL_DIR}` use inside SKILL.md body is documented for running bundled scripts; its use for template paths inside prose is assumed, not tested.
-- `claude plugin validate` was not run in this pass.
 - Skill `name` length limit: the skills page states none.
 
 ## Documentation checked
 
-- Plugins overview: https://code.claude.com/docs/en/plugins (manifest at `.claude-plugin/plugin.json`; skills run as `/<plugin>:<skill>`)
-- Create a marketplace: https://code.claude.com/docs/en/plugin-marketplaces (marketplace.json requires `name`, `owner`, `plugins`; each entry needs `name` and `source`; relative path source; `/plugin marketplace add`, `/plugin install name@marketplace`)
-- Marketplace reference: https://code.claude.com/docs/en/plugins/marketplace-reference
-- Manifest reference: https://code.claude.com/docs/en/plugins/manifest-reference
 - Skills: https://code.claude.com/docs/en/skills (SKILL.md frontmatter: `name`, `description` etc.; `description` + `when_to_use` truncated at 1,536 chars; keep SKILL.md under 500 lines; link supporting files)
 - Remotion licence: https://www.remotion.dev/docs/license and https://raw.githubusercontent.com/remotion-dev/remotion/main/LICENSE.md (read 2026-10-19: free for individuals, for-profits up to 3 employees, non-profits, evaluation; Company License otherwise; Remotion 5.0 changes). Pricing: https://www.remotion.pro/license
 - HyperFrames: https://github.com/heygen-com/hyperframes (Apache-2.0, Node 22+)

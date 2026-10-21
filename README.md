@@ -1,6 +1,6 @@
 # motion-craft
 
-A Claude Code plugin that helps you direct and render polished motion-graphics clips (UI and announcement animations with kinetic type) as mp4 files. You need Claude Code and nothing else. The plugin does not ship a renderer: it sets one up for you and adds the part that is usually missing, which is direction and review.
+A set of Claude Code skills that helps you direct and render polished motion-graphics clips (UI and announcement animations with kinetic type) as mp4 files. You need Claude Code and nothing else. These skills do not ship a renderer: they set one up for you and add the part that is usually missing, which is direction and review.
 
 Skills:
 
@@ -14,14 +14,25 @@ Renderers: **HyperFrames** (default; HTML/CSS/GSAP, Apache-2.0) or **Remotion** 
 
 ## Install
 
-In Claude Code, from a local clone (or a repository URL / `owner/repo` once it is hosted):
+Skills are plain folders. Copy them from a clone of this repository. Each skill's hello-world step copies a project from `templates/`, which it looks up two levels above the skill folder (`.claude/templates/`), so copy `templates/` too.
+
+**Global** (every project):
 
 ```
-/plugin marketplace add /path/to/motion-craft
-/plugin install motion-craft@motion-craft
+mkdir -p ~/.claude/skills ~/.claude/templates
+cp -r skills/motion-setup skills/motion-direction skills/motion-stills-loop ~/.claude/skills/
+cp -r templates/. ~/.claude/templates/
 ```
 
-The same in a shell: `claude plugin marketplace add /path/to/motion-craft` and `claude plugin install motion-craft@motion-craft`. Skills are namespaced: `/motion-craft:motion-setup`, `/motion-craft:motion-direction`, `/motion-craft:motion-stills-loop`. Claude also loads them on its own when you ask for an animation.
+**Per project**, from the project root:
+
+```
+mkdir -p .claude/skills .claude/templates
+cp -r /path/to/motion-craft/skills/motion-setup /path/to/motion-craft/skills/motion-direction /path/to/motion-craft/skills/motion-stills-loop .claude/skills/
+cp -r /path/to/motion-craft/templates/. .claude/templates/
+```
+
+Restart Claude Code (or start a new session) so it picks the skills up. Invoke them as `/motion-setup`, `/motion-direction` and `/motion-stills-loop`. Claude also loads them on its own when you ask for an animation.
 
 ## Quick start
 
@@ -45,8 +56,8 @@ The hello clip is specified in [docs/HELLO-SPEC.md](docs/HELLO-SPEC.md). Both te
 
 ## Licence
 
-- This plugin: MIT, see [LICENSE](LICENSE).
+- These skills: MIT, see [LICENSE](LICENSE).
 - HyperFrames: Apache-2.0, no per-render fees.
-- **Remotion has its own licence.** Free for individuals, for-profit organisations with up to 3 employees, non-profits and evaluation; a paid Company License is required for larger for-profit organisations. Check https://www.remotion.dev/docs/license (pricing: https://www.remotion.pro/license). The plugin does not grant or replace it.
+- **Remotion has its own licence.** Free for individuals, for-profit organisations with up to 3 employees, non-profits and evaluation; a paid Company License is required for larger for-profit organisations. Check https://www.remotion.dev/docs/license (pricing: https://www.remotion.pro/license). These skills do not grant or replace it.
 
 Status: v0.1.

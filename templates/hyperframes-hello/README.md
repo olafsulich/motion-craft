@@ -1,6 +1,6 @@
 # hyperframes-hello
 
-The 4 s hello clip (spring with overshoot, camera zoom, shape morph, kinetic type), built with HyperFrames. Spec: `docs/HELLO-SPEC.md` at the plugin root. Commands: `skills/motion-setup/references/hyperframes.md`.
+The 4 s hello clip (spring with overshoot, camera zoom, shape morph, kinetic type), built with HyperFrames. Spec: `docs/HELLO-SPEC.md` at the motion-craft repo root. Commands: `skills/motion-setup/references/hyperframes.md`.
 
 ```bash
 npm install

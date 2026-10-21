@@ -13,7 +13,7 @@ Run these and report a table of found / missing / version. Fix or ask before goi
 
 | Need | Check | Notes |
 |---|---|---|
-| Node | `node -v` | 22 or newer (HyperFrames requires 22+; 24 was used to test this plugin). |
+| Node | `node -v` | 22 or newer (HyperFrames requires 22+; 24 was used to test these skills). |
 | ffmpeg + ffprobe | `ffmpeg -version`, `ffprobe -version` | Both must be on PATH. Install with the system package manager (`apt install ffmpeg`, `brew install ffmpeg`). |
 | Free disk | `df -h . "${TMPDIR:-/tmp}"` | **Warn below about 2 GB free** on both the project disk and the temp disk. Needs: HyperFrames about 400 MB (`node_modules` 120 MB + Chrome 260 MB) and it refuses to render below 1 GB free; Remotion about 800 MB (`node_modules` 490 MB + Chrome 300 MB) plus temp frames. On a full disk Remotion's Chrome download dies with `ENOSPC` and a render can hang at low CPU instead of failing. Free space first; do not delete caches you did not create. |
 | Memory | `free -h` | Aim for 4 GB free RAM. Close other browsers before rendering. |
@@ -37,11 +37,11 @@ Remotion is free for individuals, for-profit organisations with up to 3 employee
 
 ## 3. Scaffold the hello project
 
-The plugin ships one identical ~4 s clip per renderer (a spring with tiny overshoot, a camera zoom, a shape morph, kinetic type). Copy the template into the user's working directory; never edit it in place:
+These skills ship one identical ~4 s clip per renderer (a spring with tiny overshoot, a camera zoom, a shape morph, kinetic type). Copy the template into the user's working directory; never edit it in place:
 
 ```bash
 # HyperFrames (use remotion-hello for Remotion). Claude Code substitutes ${CLAUDE_SKILL_DIR};
-# in a shell you run yourself, write out the plugin's path instead (the repo root has templates/).
+# in a shell you run yourself, write out the path to the folder that holds templates/ instead (the repo clone, or the .claude/ folder the skills were copied into).
 cp -r "${CLAUDE_SKILL_DIR}/../../templates/hyperframes-hello" ./motion-hello
 cd motion-hello
 npm install                      # warns about esbuild's postinstall: harmless

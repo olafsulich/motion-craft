@@ -1,5 +1,7 @@
 # Brief: build the motion-craft Claude Code plugin (v0.1): HyperFrames + Remotion versions
 
+> **Superseded on packaging:** since 2026-10-19 motion-craft ships as plain skills, not a plugin (see README). The wording below is historical.
+
 Olaf's decision: build the outsider skills plugin with BOTH a HyperFrames and a Remotion version. No half-day port test.
 
 Read first (in ~/projects/motion-lab, on these branches; use `git show <branch>:<path>`):
